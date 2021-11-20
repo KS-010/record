@@ -4,7 +4,7 @@ ENV LANG=C.UTF-8 \
       TZ=Asia/Shanghai \
       DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
-      && apt-get install -y  wget unzip curl ssh npm screen vim tzdata sudo \
+      && apt-get install -y  wget unzip curl ssh npm screen vim tzdata sudo git \
       && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
       && echo ${TZ} > /etc/timezone \
       && dpkg-reconfigure --frontend noninteractive tzdata \
