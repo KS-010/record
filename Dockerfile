@@ -8,7 +8,7 @@ RUN apt-get update -y \
       && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
       && echo ${TZ} > /etc/timezone \
       && dpkg-reconfigure --frontend noninteractive tzdata \
-      && curl -o /root/install.sh https://raw.githubusercontent.com/lovezzzxxx/liverecord/master/install.sh | bash /root/install.sh \
+      && curl -o /root/install.sh https://raw.githubusercontent.com/lovezzzxxx/liverecord/master/install.sh && bash /root/install.sh \
       && rm -rf /var/lib/apt/lists/* \
       #&& ssh-keygen -A \
       && npm install -g wstunnel \
