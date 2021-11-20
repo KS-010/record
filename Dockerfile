@@ -1,10 +1,10 @@
-FROM debian:buster-slim
+FROM python:slim-buster
 ENV LANG=C.UTF-8 \
       DPATH=/usr/local/bin \
       TZ=Asia/Shanghai \
       DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
-      && apt-get install -y  wget unzip curl ssh npm screen vim tzdata git\
+      && apt-get install -y  wget unzip curl ssh npm screen vim tzdata sudo \
       && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
       && echo ${TZ} > /etc/timezone \
       && dpkg-reconfigure --frontend noninteractive tzdata \
