@@ -8,7 +8,7 @@ RUN apt-get update -y \
       && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
       && echo ${TZ} > /etc/timezone \
       && dpkg-reconfigure --frontend noninteractive tzdata \
-      
+      && wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz && tar -xvJf ffmpeg* && mv ffmpeg*/ffmpeg ${DPATH} \
       && rm -rf /var/lib/apt/lists/* \
       #&& ssh-keygen -A \
       && npm install -g wstunnel \
