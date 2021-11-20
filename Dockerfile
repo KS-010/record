@@ -1,4 +1,4 @@
-FROM debian:slim-buster
+FROM debian:buster-slim
 ENV LANG=C.UTF-8 \
       DPATH=/usr/local/bin \
       TZ=Asia/Shanghai \
