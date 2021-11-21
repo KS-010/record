@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM python:buster
 ENV LANG=C.UTF-8 \
       DPATH=/usr/local/bin \
       TZ=Asia/Shanghai \
