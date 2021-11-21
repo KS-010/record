@@ -25,7 +25,7 @@ RUN apk update -f \
 	&& pip install --no-cache-dir --upgrade streamlink yq youtube_dl \
 #COPY ./live-dl /opt/live-dl/
 #COPY ./config.example.yml /opt/live-dl/config.yml
-	&& mkdir -p /opt/live-dl/
+	&& mkdir -p /opt/live-dl/ \
 	&& wget -O /opt/live-dl/live-dl https://raw.githubusercontent.com/sparanoid/live-dl/master/live-dl \
 	&& wget -O /opt/live-dl/config.yml https://raw.githubusercontent.com/sparanoid/live-dl/master/config.example.yml \
 	&& chmod a+x /opt/live-dl/live-dl \
