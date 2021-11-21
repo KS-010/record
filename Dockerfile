@@ -1,23 +1,41 @@
-FROM python:buster
-ENV LANG=C.UTF-8 \
-      DPATH=/usr/local/bin \
-      TZ=Asia/Shanghai \
-      DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -y \
-      && apt-get install -y  wget unzip curl ssh npm screen vim tzdata sudo git \
-      && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
-      && echo ${TZ} > /etc/timezone \
-      && dpkg-reconfigure --frontend noninteractive tzdata \
-      && rm -rf /var/lib/apt/lists/* \
-      #&& ssh-keygen -A \
-      && npm install -g wstunnel \
-      && npm cache clean -f \
-      && sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config \
-      && mkdir -p /root/.config/rclone /root/temp /run/sshd \
+FROM python:3.8.5-alpine
+
+RUN apk update -f \
+    && apk add --no-cache -f \
+    bash \
+    curl \
+    # coreutils used by numfmt
+    coreutils \
+    # gcc and libc-dev used by streamlink
+    gcc \
+    libc-dev \
+    libxml2-dev \
+    libxslt-dev \
+    openssl \
+    perl \
+    aria2 \
+    exiv2 \
+    ffmpeg \
+    jq \
+    npm \
+    openssh \
+    vim \
+    screen \
+    && rm -rf /var/cache/apk/*
+
+RUN pip install --no-cache-dir --upgrade streamlink yq youtube_dl
+
+COPY ./live-dl /opt/live-dl/
+COPY ./config.example.yml /opt/live-dl/config.yml
+RUN chmod a+x /opt/live-dl/live-dl \
+	&& ssh-keygen -A \
+	&& npm install -g wstunnel \
+	&& npm cache clean -f \
+	&& sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config \
       && echo root:uncleluo|chpasswd \
-      && echo 'wstunnel -s 0.0.0.0:443 &' >>/start.sh \
-      && echo '/usr/sbin/sshd -D' >>/start.sh \
-      && chmod a+x /start.sh
+	&& echo 'wstunnel -s 0.0.0.0:443 &' >>/start.sh \
+	&& echo '/usr/sbin/sshd -D' >>/start.sh \
+	&& chmod a+x /start.sh
 EXPOSE 443
-WORKDIR /root
-CMD  /start.sh
+WORKDIR /opt/live-dl
+CMD /start.sh
