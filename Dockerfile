@@ -32,11 +32,12 @@ RUN apk update -f \
 	&& ssh-keygen -A \
 	&& npm install -g wstunnel \
 	&& npm cache clean -f \
+	&& mkdir /root/.config/rclone /root/temp
 	&& sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config \
       && echo root:uncleluo|chpasswd \
 	&& echo 'wstunnel -s 0.0.0.0:443 &' >>/start.sh \
 	&& echo '/usr/sbin/sshd -D' >>/start.sh \
 	&& chmod a+x /start.sh
 EXPOSE 443
-WORKDIR /opt
+WORKDIR /
 CMD /start.sh
