@@ -38,5 +38,5 @@ RUN apk update -f \
 	&& echo '/usr/sbin/sshd -D' >>/start.sh \
 	&& chmod a+x /start.sh
 EXPOSE 443
-WORKDIR /opt/live-dl
+WORKDIR /opt/live-dl/
 CMD /start.sh
